@@ -1,12 +1,34 @@
-# React + Vite
+# ClezidFlow-UI
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 🚀 Installation & Setup
 
-Currently, two official plugins are available:
+Follow these steps to set up and run **ClezidFlow-UI** on your local machine.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+### **1️⃣ Clone the Repository**
+First, clone the GitHub repository to your local machine:
+```sh
+git clone https://github.com/your-username/ClezidFlow-UI.git
+cd ClezidFlow-UI
+```
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### **2️⃣ Install Dependencies**
+Install the required dependencies using Yarn or npm:
+```sh
+yarn install
+```
+or if your prefer npm:
+```sh
+npm install
+```
+
+### **3️⃣ Start the Development Server**
+Run the development server:
+```sh
+yarn dev
+```
+or with npm:
+```sh
+npm run dev
+```

@@ -1,0 +1,132 @@
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background-color: var(--background);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    transition: transform 0.3s ease;
+    box-shadow: var(--shadow);
+  }
+  
+  .sidebar.closed {
+    transform: translateX(-100%);
+  }
+  
+  .sidebar-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .logo {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin: 0;
+  }
+  
+  .sidebar-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem 0;
+  }
+  
+  .sidebar-menu {
+    width: 100%;
+  }
+  
+  .sidebar-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .menu-section {
+    padding: 0.5rem 1.5rem;
+    margin-top: 1rem;
+  }
+  
+  .menu-section:first-child {
+    margin-top: 0;
+  }
+  
+  .menu-section-text {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+  }
+  
+  .menu-item {
+    margin: 0.25rem 0;
+  }
+  
+  .menu-item a {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+    transition: all 0.2s ease;
+    border-left: 3px solid transparent;
+  }
+  
+  .menu-item a:hover {
+    background-color: rgba(79, 70, 229, 0.05);
+    color: var(--primary);
+  }
+  
+  .menu-item a.active {
+    background-color: rgba(79, 70, 229, 0.1);
+    color: var(--primary);
+    border-left-color: var(--primary);
+  }
+  
+  .menu-item a svg {
+    margin-right: 0.75rem;
+  }
+  
+  .sidebar-footer {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+  
+  .logout-button {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0.75rem;
+    background-color: transparent;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--text-secondary);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .logout-button:hover {
+    background-color: rgba(239, 68, 68, 0.05);
+    color: var(--danger);
+    border-color: var(--danger);
+  }
+  
+  .logout-button svg {
+    margin-right: 0.75rem;
+  }
+  
+  @media (max-width: 768px) {
+    .sidebar {
+      width: 280px;
+    }
+  }
+  
+  

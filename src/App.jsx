@@ -9,6 +9,11 @@ const UpdateForm = lazy(() => import("./leads/Update"))
 const LeadsLandingPage = lazy(() => import("./leads/LeadsLandingPage"))
 const Display = lazy(() => import("./leads/Display"))
 
+// Add project components
+const ProjectLandingPage = lazy(() => import("./projects/ProjectLandingPage"))
+const DisplayProject = lazy(() => import("./projects/DisplayProject"))
+const UpdateProject = lazy(() => import("./projects/UpdateProject"))
+
 function App() {
   const router = createBrowserRouter([
     {
@@ -37,12 +42,15 @@ function App() {
         },
         {
           path: "/projects",
-          element: (
-            <div className="page-container">
-              <h1>Projects</h1>
-              <p>Projects page is under construction.</p>
-            </div>
-          ),
+          element: <ProjectLandingPage />,
+        },
+        {
+          path: "/project/:id",
+          element: <DisplayProject />,
+        },
+        {
+          path: "/updateProject/:id",
+          element: <UpdateProject />,
         },
         {
           path: "/teams",

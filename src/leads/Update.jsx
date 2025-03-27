@@ -65,7 +65,7 @@ export default function UpdateForm() {
         setSaving(false)
         if (clientData.status === "Converted") {
           alert("Lead converted! Redirecting to Projects page...")
-          navigate("/project")
+          navigate("/projects")
         } else {
           alert("Lead updated successfully!")
           navigate("/")

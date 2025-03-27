@@ -1,0 +1,42 @@
+/* Custom styles for MUI DataTable */
+.MuiToolbar-root.MuiToolbar-gutters {
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
+  padding-right: 60px !important; /* Increase padding to make room for our custom toolbar */
+}
+
+.custom-mui-table .MuiToolbar-root {
+  padding-right: 80px !important; /* Increase padding to prevent overlap */
+}
+
+.MuiTableCell-head {
+  font-weight: 600 !important;
+  color: var(--text-secondary) !important;
+  background-color: var(--background-alt) !important;
+}
+
+.MuiTableRow-root:hover {
+  background-color: rgba(243, 244, 246, 0.5) !important;
+}
+
+/* Fix for overlapping buttons */
+.custom-toolbar {
+  display: flex;
+  gap: 0.5rem;
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  z-index: 10; /* Ensure our custom toolbar is above other elements */
+}
+
+/* Add more space between MUI's built-in buttons */
+.MuiButtonBase-root.MuiIconButton-root {
+  margin-left: 8px !important;
+}
+
+/* Ensure filter button has enough space */
+button[aria-label="Show Filter Table"] {
+  margin-right: 48px !important; /* Add space before our custom view columns button */
+}
+

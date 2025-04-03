@@ -3,17 +3,22 @@
 import { useState, useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import MUIDataTable from "mui-datatables"
-import { Menu, MenuItem, IconButton, Checkbox, FormControlLabel, Tooltip, Button } from "@mui/material"
-import { ViewColumn, Delete, Edit, Add, FileCopy as FileText } from "@mui/icons-material"
+import { Menu, MenuItem, IconButton, Checkbox, FormControlLabel, Tooltip, Button, Popover } from "@mui/material"
+import { ViewColumn, Delete, Edit, Add, FileCopy as FileText, KeyboardArrowDown } from "@mui/icons-material"
 import axios from "axios"
 import { formatDate, filterableColumns, isLeadNewByClick } from "./Utils"
 import "../styles/LeadsLandingPage.css"
 
+// Update the component to include dropdown functionality
 export default function LeadsLandingPage() {
   const [clients, setClients] = useState([])
   const [columns, setColumns] = useState([])
   const [visibleColumns, setVisibleColumns] = useState({})
   const [columnMenuAnchor, setColumnMenuAnchor] = useState(null)
+  const [statusAnchorEl, setStatusAnchorEl] = useState(null)
+  const [priorityAnchorEl, setPriorityAnchorEl] = useState(null)
+  const [selectedClient, setSelectedClient] = useState(null)
+  const [isUpdating, setIsUpdating] = useState(false)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -63,13 +68,20 @@ export default function LeadsLandingPage() {
         name: "priority",
         label: "Priority",
         options: {
-          customBodyRender: (value) => {
+          customBodyRender: (value, tableMeta) => {
             let className = "status-badge "
             if (value === "High") className += "high"
             else if (value === "Medium") className += "medium"
             else className += "low"
 
-            return <span className={className}>{value}</span>
+            const client = clients[tableMeta.rowIndex]
+
+            return (
+              <div className="editable-cell" onClick={(e) => handlePriorityClick(e, client)}>
+                <span className={className}>{value}</span>
+                <KeyboardArrowDown className="dropdown-icon" fontSize="small" />
+              </div>
+            )
           },
         },
       },
@@ -77,7 +89,7 @@ export default function LeadsLandingPage() {
         name: "status",
         label: "Status",
         options: {
-          customBodyRender: (value) => {
+          customBodyRender: (value, tableMeta) => {
             let className = "status-badge "
             if (value === "New") className += "new"
             else if (value === "Interested") className += "interested"
@@ -85,7 +97,14 @@ export default function LeadsLandingPage() {
             else if (value === "Not Interested") className += "not-interested"
             else className += "rejected"
 
-            return <span className={className}>{value}</span>
+            const client = clients[tableMeta.rowIndex]
+
+            return (
+              <div className="editable-cell" onClick={(e) => handleStatusClick(e, client)}>
+                <span className={className}>{value}</span>
+                <KeyboardArrowDown className="dropdown-icon" fontSize="small" />
+              </div>
+            )
           },
         },
       },
@@ -103,10 +122,18 @@ export default function LeadsLandingPage() {
     ]
 
     setColumns(initialColumns)
+
+    // Set default visible columns - only show important ones initially
     const initialVisibility = initialColumns.reduce((acc, col) => {
-      acc[col.name] = true
+      // Only show these columns by default
+      const defaultVisible = ["leadID", "clientName", "status", "priority", "createdAt", "followUpDate"].includes(
+        col.name,
+      )
+
+      acc[col.name] = defaultVisible
       return acc
     }, {})
+
     setVisibleColumns(initialVisibility)
   }, [clients, navigate])
 
@@ -129,6 +156,78 @@ export default function LeadsLandingPage() {
 
   const handleColumnMenuClose = () => {
     setColumnMenuAnchor(null)
+  }
+
+  // Status dropdown handlers
+  const handleStatusClick = (event, client) => {
+    event.stopPropagation()
+    setSelectedClient(client)
+    setStatusAnchorEl(event.currentTarget)
+  }
+
+  const handleStatusClose = () => {
+    setStatusAnchorEl(null)
+  }
+
+  const handleStatusChange = (newStatus) => {
+    if (!selectedClient || isUpdating) return
+
+    setIsUpdating(true)
+
+    axios
+      .put(`http://localhost:3000/updateLead/${selectedClient._id}`, {
+        ...selectedClient,
+        status: newStatus,
+      })
+      .then(() => {
+        // Update local state
+        setClients(
+          clients.map((client) => (client._id === selectedClient._id ? { ...client, status: newStatus } : client)),
+        )
+        setIsUpdating(false)
+        handleStatusClose()
+      })
+      .catch((err) => {
+        console.error("Error updating status:", err)
+        setIsUpdating(false)
+        handleStatusClose()
+      })
+  }
+
+  // Priority dropdown handlers
+  const handlePriorityClick = (event, client) => {
+    event.stopPropagation()
+    setSelectedClient(client)
+    setPriorityAnchorEl(event.currentTarget)
+  }
+
+  const handlePriorityClose = () => {
+    setPriorityAnchorEl(null)
+  }
+
+  const handlePriorityChange = (newPriority) => {
+    if (!selectedClient || isUpdating) return
+
+    setIsUpdating(true)
+
+    axios
+      .put(`http://localhost:3000/updateLead/${selectedClient._id}`, {
+        ...selectedClient,
+        priority: newPriority,
+      })
+      .then(() => {
+        // Update local state
+        setClients(
+          clients.map((client) => (client._id === selectedClient._id ? { ...client, priority: newPriority } : client)),
+        )
+        setIsUpdating(false)
+        handlePriorityClose()
+      })
+      .catch((err) => {
+        console.error("Error updating priority:", err)
+        setIsUpdating(false)
+        handlePriorityClose()
+      })
   }
 
   const tableColumns = columns
@@ -278,6 +377,94 @@ export default function LeadsLandingPage() {
       <div className="leads-table-container">
         <MUIDataTable title="" data={clients} columns={tableColumns} options={options} />
       </div>
+
+      {/* Status Dropdown */}
+      <Popover
+        open={Boolean(statusAnchorEl)}
+        anchorEl={statusAnchorEl}
+        onClose={handleStatusClose}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "left",
+        }}
+        className="status-popover"
+      >
+        <div className="dropdown-menu">
+          <div className="dropdown-menu-title">Change Status</div>
+          <MenuItem
+            onClick={() => handleStatusChange("New")}
+            className={`menu-item ${selectedClient?.status === "New" ? "active" : ""}`}
+          >
+            <span className="status-badge new">New</span>
+          </MenuItem>
+          <MenuItem
+            onClick={() => handleStatusChange("Interested")}
+            className={`menu-item ${selectedClient?.status === "Interested" ? "active" : ""}`}
+          >
+            <span className="status-badge interested">Interested</span>
+          </MenuItem>
+          <MenuItem
+            onClick={() => handleStatusChange("Not Interested")}
+            className={`menu-item ${selectedClient?.status === "Not Interested" ? "active" : ""}`}
+          >
+            <span className="status-badge not-interested">Not Interested</span>
+          </MenuItem>
+          <MenuItem
+            onClick={() => handleStatusChange("Converted")}
+            className={`menu-item ${selectedClient?.status === "Converted" ? "active" : ""}`}
+          >
+            <span className="status-badge converted">Converted</span>
+          </MenuItem>
+          <MenuItem
+            onClick={() => handleStatusChange("Rejected")}
+            className={`menu-item ${selectedClient?.status === "Rejected" ? "active" : ""}`}
+          >
+            <span className="status-badge rejected">Rejected</span>
+          </MenuItem>
+        </div>
+      </Popover>
+
+      {/* Priority Dropdown */}
+      <Popover
+        open={Boolean(priorityAnchorEl)}
+        anchorEl={priorityAnchorEl}
+        onClose={handlePriorityClose}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "left",
+        }}
+        className="priority-popover"
+      >
+        <div className="dropdown-menu">
+          <div className="dropdown-menu-title">Change Priority</div>
+          <MenuItem
+            onClick={() => handlePriorityChange("High")}
+            className={`menu-item ${selectedClient?.priority === "High" ? "active" : ""}`}
+          >
+            <span className="status-badge high">High</span>
+          </MenuItem>
+          <MenuItem
+            onClick={() => handlePriorityChange("Medium")}
+            className={`menu-item ${selectedClient?.priority === "Medium" ? "active" : ""}`}
+          >
+            <span className="status-badge medium">Medium</span>
+          </MenuItem>
+          <MenuItem
+            onClick={() => handlePriorityChange("Low")}
+            className={`menu-item ${selectedClient?.priority === "Low" ? "active" : ""}`}
+          >
+            <span className="status-badge low">Low</span>
+          </MenuItem>
+        </div>
+      </Popover>
     </div>
   )
 }

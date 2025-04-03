@@ -3,8 +3,8 @@
 import { useState, useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import MUIDataTable from "mui-datatables"
-import { Menu, MenuItem, IconButton, Checkbox, FormControlLabel, Tooltip, Button } from "@mui/material"
-import { ViewColumn, Delete, Edit, Add, FileCopy as FileText } from "@mui/icons-material"
+import { Menu, MenuItem, IconButton, Checkbox, FormControlLabel, Tooltip, Button, Popover } from "@mui/material"
+import { ViewColumn, Delete, Edit, Add, FileCopy as FileText, KeyboardArrowDown } from "@mui/icons-material"
 import axios from "axios"
 import { formatDate } from "../leads/Utils"
 import "../styles/ProjectLandingPage.css"
@@ -14,6 +14,9 @@ export default function ProjectLandingPage() {
   const [columns, setColumns] = useState([])
   const [visibleColumns, setVisibleColumns] = useState({})
   const [columnMenuAnchor, setColumnMenuAnchor] = useState(null)
+  const [statusAnchorEl, setStatusAnchorEl] = useState(null)
+  const [selectedProject, setSelectedProject] = useState(null)
+  const [isUpdating, setIsUpdating] = useState(false)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -87,7 +90,7 @@ export default function ProjectLandingPage() {
         name: "status",
         label: "Status",
         options: {
-          customBodyRender: (value) => {
+          customBodyRender: (value, tableMeta) => {
             let className = "status-badge "
             if (value === "In Progress") className += "interested"
             else if (value === "Completed") className += "converted"
@@ -95,17 +98,30 @@ export default function ProjectLandingPage() {
             else if (value === "Cancelled") className += "not-interested"
             else className += "new"
 
-            return <span className={className}>{value}</span>
+            const project = projects[tableMeta.rowIndex]
+
+            return (
+              <div className="editable-cell" onClick={(e) => handleStatusClick(e, project)}>
+                <span className={className}>{value}</span>
+                <KeyboardArrowDown className="dropdown-icon" fontSize="small" />
+              </div>
+            )
           },
         },
       },
     ]
 
     setColumns(initialColumns)
+
+    // Set default visible columns - only show important ones initially
     const initialVisibility = initialColumns.reduce((acc, col) => {
-      acc[col.name] = true
+      // Only show these columns by default
+      const defaultVisible = ["leadID", "clientName", "status", "deadline", "projectStartDate"].includes(col.name)
+
+      acc[col.name] = defaultVisible
       return acc
     }, {})
+
     setVisibleColumns(initialVisibility)
   }, [projects, navigate])
 
@@ -130,6 +146,44 @@ export default function ProjectLandingPage() {
 
   const handleColumnMenuClose = () => {
     setColumnMenuAnchor(null)
+  }
+
+  // Status dropdown handlers
+  const handleStatusClick = (event, project) => {
+    event.stopPropagation()
+    setSelectedProject(project)
+    setStatusAnchorEl(event.currentTarget)
+  }
+
+  const handleStatusClose = () => {
+    setStatusAnchorEl(null)
+  }
+
+  const handleStatusChange = (newStatus) => {
+    if (!selectedProject || isUpdating) return
+
+    setIsUpdating(true)
+
+    axios
+      .put(`http://localhost:3000/updateProject/${selectedProject._id}`, {
+        ...selectedProject,
+        status: newStatus,
+      })
+      .then(() => {
+        // Update local state
+        setProjects(
+          projects.map((project) =>
+            project._id === selectedProject._id ? { ...project, status: newStatus } : project,
+          ),
+        )
+        setIsUpdating(false)
+        handleStatusClose()
+      })
+      .catch((err) => {
+        console.error("Error updating status:", err)
+        setIsUpdating(false)
+        handleStatusClose()
+      })
   }
 
   const tableColumns = columns
@@ -285,6 +339,56 @@ export default function ProjectLandingPage() {
       <div className="projects-table-container">
         <MUIDataTable title="" data={projects} columns={tableColumns} options={options} />
       </div>
+
+      {/* Status Dropdown */}
+      <Popover
+        open={Boolean(statusAnchorEl)}
+        anchorEl={statusAnchorEl}
+        onClose={handleStatusClose}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "left",
+        }}
+        className="status-popover"
+      >
+        <div className="dropdown-menu">
+          <div className="dropdown-menu-title">Change Status</div>
+          <MenuItem
+            onClick={() => handleStatusChange("New")}
+            className={`menu-item ${selectedProject?.status === "New" ? "active" : ""}`}
+          >
+            <span className="status-badge new">New</span>
+          </MenuItem>
+          <MenuItem
+            onClick={() => handleStatusChange("In Progress")}
+            className={`menu-item ${selectedProject?.status === "In Progress" ? "active" : ""}`}
+          >
+            <span className="status-badge interested">In Progress</span>
+          </MenuItem>
+          <MenuItem
+            onClick={() => handleStatusChange("On Hold")}
+            className={`menu-item ${selectedProject?.status === "On Hold" ? "active" : ""}`}
+          >
+            <span className="status-badge warning">On Hold</span>
+          </MenuItem>
+          <MenuItem
+            onClick={() => handleStatusChange("Completed")}
+            className={`menu-item ${selectedProject?.status === "Completed" ? "active" : ""}`}
+          >
+            <span className="status-badge converted">Completed</span>
+          </MenuItem>
+          <MenuItem
+            onClick={() => handleStatusChange("Cancelled")}
+            className={`menu-item ${selectedProject?.status === "Cancelled" ? "active" : ""}`}
+          >
+            <span className="status-badge not-interested">Cancelled</span>
+          </MenuItem>
+        </div>
+      </Popover>
     </div>
   )
 }

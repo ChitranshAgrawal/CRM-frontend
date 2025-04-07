@@ -1,0 +1,272 @@
+.payment-details-page {
+    width: 100%;
+  }
+  
+  .page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+  }
+  
+  .back-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-weight: 500;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: var(--radius);
+    transition: all 0.2s ease;
+  }
+  
+  .back-button:hover {
+    color: var(--primary);
+    background-color: rgba(79, 70, 229, 0.05);
+  }
+  
+  .page-header h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+  }
+  
+  .project-info-card {
+    background-color: var(--background);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+  }
+  
+  .project-info-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  
+  .project-info-header h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0;
+  }
+  
+  .project-id {
+    font-size: 0.875rem;
+    color: var(--primary);
+    padding: 0.25rem 0.5rem;
+    background-color: rgba(79, 70, 229, 0.05);
+    border-radius: var(--radius);
+  }
+  
+  .project-info-content {
+    padding: 1.5rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+  }
+  
+  .project-info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  
+  .info-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+  
+  .info-value {
+    font-size: 0.875rem;
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+  
+  .payment-stages-container {
+    background-color: var(--background);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 1.5rem;
+  }
+  
+  .payment-stages-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+  
+  .payment-stages-header h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0;
+  }
+  
+  .no-stages {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1rem;
+    color: var(--text-muted);
+    background-color: var(--background-alt);
+    border-radius: var(--radius);
+    text-align: center;
+  }
+  
+  .payment-stages-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .payment-stage-item {
+    background-color: var(--background-alt);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  
+  .payment-stage-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    background-color: rgba(79, 70, 229, 0.05);
+    border-bottom: 1px solid var(--border);
+  }
+  
+  .payment-stage-header h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin: 0;
+    color: var(--primary);
+  }
+  
+  .btn-sm {
+    padding: 0.375rem 0.75rem;
+    font-size: 0.875rem;
+  }
+  
+  .payment-stage-form {
+    padding: 1.5rem;
+  }
+  
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .documents-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+  
+  .invoice-upload,
+  .receipt-upload {
+    background-color: var(--background);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+  }
+  
+  .invoice-upload h4,
+  .receipt-upload h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 1rem 0;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  
+  .uploaded-files {
+    margin-top: 1.5rem;
+  }
+  
+  .uploaded-files h5 {
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin: 0 0 0.75rem 0;
+    color: var(--text-secondary);
+  }
+  
+  .no-files-message {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    font-style: italic;
+  }
+  
+  .file-item {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem;
+    border-radius: var(--radius);
+    background-color: var(--background-alt);
+    margin-bottom: 0.5rem;
+  }
+  
+  .file-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius);
+    background-color: rgba(79, 70, 229, 0.1);
+    color: var(--primary);
+    margin-right: 0.75rem;
+    flex-shrink: 0;
+  }
+  
+  .file-details {
+    flex: 1;
+  }
+  
+  .file-name {
+    font-weight: 500;
+    font-size: 0.875rem;
+    color: var(--text-primary);
+  }
+  
+  .file-download {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.375rem 0.75rem;
+    border-radius: var(--radius);
+    background-color: var(--background);
+    color: var(--primary);
+    font-weight: 500;
+    font-size: 0.75rem;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+  
+  .file-download:hover {
+    background-color: var(--primary);
+    color: white;
+  }
+  
+  @media (max-width: 768px) {
+    .form-grid {
+      grid-template-columns: 1fr;
+    }
+  
+    .documents-section {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  

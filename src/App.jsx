@@ -16,6 +16,10 @@ const UpdateProject = lazy(() => import("./projects/UpdateProject"))
 const Quotation = lazy(() => import("./leads/Quotation"))
 const AllQuotations = lazy(() => import("./invoices/AllQuotations"))
 
+// Add these imports
+const Invoice = lazy(() => import("./invoices/Invoice"))
+const PaymentDetails = lazy(() => import("./projects/PaymentDetails"))
+
 function App() {
   const router = createBrowserRouter([
     {
@@ -79,6 +83,15 @@ function App() {
               <p>Activity Log page is under construction.</p>
             </div>
           ),
+        },
+        // Add these routes inside the children array
+        {
+          path: "/invoice/:id",
+          element: <Invoice />,
+        },
+        {
+          path: "/payment-details/:id",
+          element: <PaymentDetails />,
         },
       ],
     },

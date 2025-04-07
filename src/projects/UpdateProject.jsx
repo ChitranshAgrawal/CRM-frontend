@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import { useParams, useNavigate } from "react-router-dom"
 import axios from "axios"
-import { ArrowLeft, Save, Plus, Trash2 } from "react-feather"
+import { ArrowLeft, Save, Plus, Trash2, FileText } from "react-feather"
 import "../styles/UpdateProject.css"
 
 export default function UpdateProject() {
@@ -480,19 +480,31 @@ export default function UpdateProject() {
           </div>
 
           <div className="form-actions">
-            <button type="button" className="btn btn-outline" onClick={() => navigate("/projects")}>
-              Cancel
-            </button>
-            <button type="submit" className="btn btn-primary" disabled={saving}>
-              {saving ? (
-                "Saving..."
-              ) : (
-                <>
-                  <Save size={16} />
-                  <span>Update Project</span>
-                </>
-              )}
-            </button>
+            <div className="additional-actions">
+              <button type="button" className="btn btn-outline" onClick={() => navigate(`/payment-details/${id}`)}>
+                <Plus size={16} />
+                <span>Payment Details</span>
+              </button>
+              <button type="button" className="btn btn-outline" onClick={() => navigate(`/invoice/${id}`)}>
+                <FileText size={16} />
+                <span>Generate Invoice</span>
+              </button>
+            </div>
+            <div className="main-actions">
+              <button type="button" className="btn btn-outline" onClick={() => navigate("/projects")}>
+                Cancel
+              </button>
+              <button type="submit" className="btn btn-primary" disabled={saving}>
+                {saving ? (
+                  "Saving..."
+                ) : (
+                  <>
+                    <Save size={16} />
+                    <span>Update Project</span>
+                  </>
+                )}
+              </button>
+            </div>
           </div>
         </form>
       </div>

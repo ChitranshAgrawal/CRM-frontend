@@ -227,7 +227,7 @@ export default function ProjectLandingPage() {
               </IconButton>
             </Tooltip>
             <Tooltip title="Generate Invoice" placement="top">
-              <IconButton onClick={() => window.open("https://google.com", "_blank")} className="quote-button">
+              <IconButton onClick={() => navigate(`/invoice/${project?._id}`)} className="quote-button">
                 <FileText fontSize="small" />
               </IconButton>
             </Tooltip>

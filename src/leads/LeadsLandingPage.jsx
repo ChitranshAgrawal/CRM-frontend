@@ -172,6 +172,12 @@ export default function LeadsLandingPage() {
   const handleStatusChange = (newStatus) => {
     if (!selectedClient || isUpdating) return
 
+    // Add confirmation dialog
+    if (!window.confirm(`Are you sure you want to change the status to "${newStatus}"?`)) {
+      handleStatusClose()
+      return
+    }
+
     setIsUpdating(true)
 
     axios
@@ -186,6 +192,11 @@ export default function LeadsLandingPage() {
         )
         setIsUpdating(false)
         handleStatusClose()
+
+        // Redirect to projects if status is Converted
+        if (newStatus === "Converted") {
+          navigate("/projects")
+        }
       })
       .catch((err) => {
         console.error("Error updating status:", err)
@@ -207,6 +218,12 @@ export default function LeadsLandingPage() {
 
   const handlePriorityChange = (newPriority) => {
     if (!selectedClient || isUpdating) return
+
+    // Add confirmation dialog
+    if (!window.confirm(`Are you sure you want to change the priority to "${newPriority}"?`)) {
+      handlePriorityClose()
+      return
+    }
 
     setIsUpdating(true)
 

@@ -75,6 +75,10 @@ export default function DisplayProject() {
             <Edit size={16} />
             <span>Edit</span>
           </button>
+          <button className="btn btn-outline" onClick={() => navigate(`/invoice/${id}`)}>
+            <FileText size={16} />
+            <span>Generate Invoice</span>
+          </button>
           <button className="btn btn-danger" onClick={handleDelete}>
             <Trash2 size={16} />
             <span>Delete</span>

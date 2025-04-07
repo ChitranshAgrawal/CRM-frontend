@@ -36,7 +36,7 @@ const Sidebar = ({ isOpen }) => {
             <li className="menu-item">
               <NavLink to="/invoices" className={({ isActive }) => (isActive ? "active" : "")}>
                 <FileText size={18} />
-                <span>Invoices</span>
+                <span>Quotations</span>
               </NavLink>
             </li>
             <li className="menu-item">

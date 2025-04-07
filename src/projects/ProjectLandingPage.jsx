@@ -162,6 +162,12 @@ export default function ProjectLandingPage() {
   const handleStatusChange = (newStatus) => {
     if (!selectedProject || isUpdating) return
 
+    // Add confirmation dialog
+    if (!window.confirm(`Are you sure you want to change the status to "${newStatus}"?`)) {
+      handleStatusClose()
+      return
+    }
+
     setIsUpdating(true)
 
     axios

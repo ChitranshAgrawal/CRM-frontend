@@ -1,0 +1,230 @@
+.invoices-page {
+    width: 100%;
+  }
+  
+  .page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+  }
+  
+  .page-header h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+  }
+  
+  .search-filter {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .search-container {
+    position: relative;
+    width: 300px;
+  }
+  
+  .search-icon {
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+  }
+  
+  .search-input {
+    width: 100%;
+    padding: 0.5rem 0.75rem 0.5rem 2.25rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background-color: var(--background);
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+  }
+  
+  .search-input:focus {
+    outline: none;
+    border-color: var(--primary-light);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
+  }
+  
+  .invoices-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .stat-card {
+    background-color: var(--background);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+    box-shadow: var(--shadow);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+  
+  .stat-card-title {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin: 0 0 0.5rem 0;
+  }
+  
+  .stat-card-value {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+  }
+  
+  .quotations-container {
+    background-color: var(--background);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 1.5rem;
+  }
+  
+  .quotations-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .quotation-card {
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--radius);
+    background-color: var(--background-alt);
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .quotation-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+  }
+  
+  .quotation-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80px;
+    background-color: rgba(79, 70, 229, 0.1);
+    color: var(--primary);
+  }
+  
+  .quotation-details {
+    padding: 1rem;
+    flex: 1;
+  }
+  
+  .quotation-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem 0;
+    color: var(--text-primary);
+  }
+  
+  .quotation-filename {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin: 0 0 0.5rem 0;
+    word-break: break-all;
+  }
+  
+  .quotation-date {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin: 0;
+  }
+  
+  .quotation-actions {
+    padding: 1rem;
+    border-top: 1px solid var(--border);
+  }
+  
+  .download-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.5rem;
+    background-color: var(--background);
+    color: var(--primary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-weight: 500;
+    font-size: 0.875rem;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+  
+  .download-button:hover {
+    background-color: var(--primary);
+    color: white;
+    border-color: var(--primary);
+  }
+  
+  .no-quotations {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1rem;
+    color: var(--text-muted);
+    text-align: center;
+  }
+  
+  .no-quotations svg {
+    margin-bottom: 1rem;
+    opacity: 0.5;
+  }
+  
+  .loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 300px;
+    gap: 1rem;
+  }
+  
+  .loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(79, 70, 229, 0.1);
+    border-radius: 50%;
+    border-top-color: var(--primary);
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .page-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+  
+    .search-container {
+      width: 100%;
+    }
+  
+    .quotations-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  

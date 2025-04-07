@@ -13,6 +13,8 @@ const Display = lazy(() => import("./leads/Display"))
 const ProjectLandingPage = lazy(() => import("./projects/ProjectLandingPage"))
 const DisplayProject = lazy(() => import("./projects/DisplayProject"))
 const UpdateProject = lazy(() => import("./projects/UpdateProject"))
+const Quotation = lazy(() => import("./leads/Quotation"))
+const AllQuotations = lazy(() => import("./invoices/AllQuotations"))
 
 function App() {
   const router = createBrowserRouter([
@@ -53,20 +55,19 @@ function App() {
           element: <UpdateProject />,
         },
         {
+          path: "/pdf-files/:id",
+          element: <Quotation />,
+        },
+        {
+          path: "/invoices",
+          element: <AllQuotations />,
+        },
+        {
           path: "/teams",
           element: (
             <div className="page-container">
               <h1>Teams</h1>
               <p>Teams page is under construction.</p>
-            </div>
-          ),
-        },
-        {
-          path: "/invoices",
-          element: (
-            <div className="page-container">
-              <h1>Invoices</h1>
-              <p>Invoices page is under construction.</p>
             </div>
           ),
         },

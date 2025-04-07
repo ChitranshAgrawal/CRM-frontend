@@ -271,7 +271,7 @@ export default function LeadsLandingPage() {
               </IconButton>
             </Tooltip>
             <Tooltip title="Send Quote" placement="top">
-              <IconButton onClick={() => window.open("https://google.com", "_blank")} className="quote-button">
+              <IconButton onClick={() => navigate(`/pdf-files/${client?._id}`)} className="quote-button">
                 <FileText fontSize="small" />
               </IconButton>
             </Tooltip>

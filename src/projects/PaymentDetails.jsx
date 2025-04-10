@@ -298,48 +298,54 @@ export default function PaymentDetails() {
                   <div className="documents-section">
                     <div className="invoice-upload">
                       <h4>Invoice Upload</h4>
-                      <div className="form-group">
-                        <label className="form-label" htmlFor={`fileName-${index}`}>
-                          Invoice Title
-                        </label>
-                        <input
-                          type="text"
-                          id={`fileName-${index}`}
-                          className="form-control"
-                          value={stage.fileName || ""}
-                          onChange={(e) => {
-                            const updatedStages = [...paymentStages]
-                            updatedStages[index].fileName = e.target.value
-                            setPaymentStages(updatedStages)
-                          }}
-                          placeholder="Enter invoice title"
-                        />
-                      </div>
-
-                      <div className="form-group">
-                        <label className="form-label" htmlFor={`file-${index}`}>
-                          Upload Invoice (PDF)
-                        </label>
-                        <div className="file-input-container">
+                      <div className="form-row">
+                        <div className="form-group">
+                          <label className="form-label" htmlFor={`fileName-${index}`}>
+                            Invoice Title
+                          </label>
                           <input
-                            type="file"
-                            id={`file-${index}`}
-                            accept="application/pdf"
-                            className="file-input"
+                            type="text"
+                            id={`fileName-${index}`}
+                            className="form-control"
+                            value={stage.fileName || ""}
                             onChange={(e) => {
                               const updatedStages = [...paymentStages]
-                              updatedStages[index].file = e.target.files[0]
+                              updatedStages[index].fileName = e.target.value
                               setPaymentStages(updatedStages)
                             }}
+                            placeholder="Enter invoice title"
                           />
-                          <div className="file-input-label">
-                            <Upload size={16} />
-                            <span>{stage.file ? stage.file.name : "Choose a PDF file"}</span>
+                        </div>
+
+                        <div className="form-group file-upload-group">
+                          <label className="form-label" htmlFor={`file-${index}`}>
+                            Upload Invoice (PDF)
+                          </label>
+                          <div className="file-input-container">
+                            <input
+                              type="file"
+                              id={`file-${index}`}
+                              accept="application/pdf"
+                              className="file-input"
+                              onChange={(e) => {
+                                const updatedStages = [...paymentStages]
+                                updatedStages[index].file = e.target.files[0]
+                                setPaymentStages(updatedStages)
+                              }}
+                            />
+                            <div className="file-input-label">
+                              <Upload size={16} />
+                              <span>{stage.file ? stage.file.name : "Choose a PDF file"}</span>
+                            </div>
                           </div>
                         </div>
                       </div>
 
-                      <button type="button" className="btn btn-primary" onClick={(e) => submitInvoice(e, index)}>
+                      <button
+                        type="button"
+                        className="btn btn-primary upload-btn"
+                        onClick={(e) => submitInvoice(e, index)}
+                      >
                         Upload Invoice
                       </button>
 
@@ -371,48 +377,54 @@ export default function PaymentDetails() {
 
                     <div className="receipt-upload">
                       <h4>Receipt Upload</h4>
-                      <div className="form-group">
-                        <label className="form-label" htmlFor={`receiptFileName-${index}`}>
-                          Receipt Title
-                        </label>
-                        <input
-                          type="text"
-                          id={`receiptFileName-${index}`}
-                          className="form-control"
-                          value={stage.receiptFileName || ""}
-                          onChange={(e) => {
-                            const updatedStages = [...paymentStages]
-                            updatedStages[index].receiptFileName = e.target.value
-                            setPaymentStages(updatedStages)
-                          }}
-                          placeholder="Enter receipt title"
-                        />
-                      </div>
-
-                      <div className="form-group">
-                        <label className="form-label" htmlFor={`receiptFile-${index}`}>
-                          Upload Receipt (PDF)
-                        </label>
-                        <div className="file-input-container">
+                      <div className="form-row">
+                        <div className="form-group">
+                          <label className="form-label" htmlFor={`receiptFileName-${index}`}>
+                            Receipt Title
+                          </label>
                           <input
-                            type="file"
-                            id={`receiptFile-${index}`}
-                            accept="application/pdf"
-                            className="file-input"
+                            type="text"
+                            id={`receiptFileName-${index}`}
+                            className="form-control"
+                            value={stage.receiptFileName || ""}
                             onChange={(e) => {
                               const updatedStages = [...paymentStages]
-                              updatedStages[index].receiptFile = e.target.files[0]
+                              updatedStages[index].receiptFileName = e.target.value
                               setPaymentStages(updatedStages)
                             }}
+                            placeholder="Enter receipt title"
                           />
-                          <div className="file-input-label">
-                            <Upload size={16} />
-                            <span>{stage.receiptFile ? stage.receiptFile.name : "Choose a PDF file"}</span>
+                        </div>
+
+                        <div className="form-group file-upload-group">
+                          <label className="form-label" htmlFor={`receiptFile-${index}`}>
+                            Upload Receipt (PDF)
+                          </label>
+                          <div className="file-input-container">
+                            <input
+                              type="file"
+                              id={`receiptFile-${index}`}
+                              accept="application/pdf"
+                              className="file-input"
+                              onChange={(e) => {
+                                const updatedStages = [...paymentStages]
+                                updatedStages[index].receiptFile = e.target.files[0]
+                                setPaymentStages(updatedStages)
+                              }}
+                            />
+                            <div className="file-input-label">
+                              <Upload size={16} />
+                              <span>{stage.receiptFile ? stage.receiptFile.name : "Choose a PDF file"}</span>
+                            </div>
                           </div>
                         </div>
                       </div>
 
-                      <button type="button" className="btn btn-primary" onClick={(e) => submitReceipt(e, index)}>
+                      <button
+                        type="button"
+                        className="btn btn-primary upload-btn"
+                        onClick={(e) => submitReceipt(e, index)}
+                      >
                         Upload Receipt
                       </button>
 
@@ -451,4 +463,3 @@ export default function PaymentDetails() {
     </div>
   )
 }
-

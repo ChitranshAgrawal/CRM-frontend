@@ -1,5 +1,3 @@
-"use client"
-
 import { useState, useEffect } from "react"
 import { useParams, useNavigate } from "react-router-dom"
 import axios from "axios"
@@ -53,28 +51,28 @@ export default function PaymentDetails() {
     ])
   }
 
-  const removePaymentStage = async (index) => {
-    const stageToRemove = paymentStages[index]
+  // const removePaymentStage = async (index) => {
+  //   const stageToRemove = paymentStages[index]
 
-    // If stage has an _id, it's already saved in DB
-    if (stageToRemove._id) {
-      try {
-        await axios.delete(`${url}/remove-stage/${id}/${stageToRemove._id}`)
-        const updatedStages = [...paymentStages]
-        updatedStages.splice(index, 1)
-        setPaymentStages(updatedStages)
-        alert("Stage removed successfully")
-      } catch (err) {
-        console.error("Error removing stage:", err)
-        alert("Failed to remove stage")
-      }
-    } else {
-      // Not saved yet, just remove locally
-      const updatedStages = [...paymentStages]
-      updatedStages.splice(index, 1)
-      setPaymentStages(updatedStages)
-    }
-  }
+  //   // If stage has an _id, it's already saved in DB
+  //   if (stageToRemove._id) {
+  //     try {
+  //       await axios.delete(`${url}/remove-stage/${id}/${stageToRemove._id}`)
+  //       const updatedStages = [...paymentStages]
+  //       updatedStages.splice(index, 1)
+  //       setPaymentStages(updatedStages)
+  //       alert("Stage removed successfully")
+  //     } catch (err) {
+  //       console.error("Error removing stage:", err)
+  //       alert("Failed to remove stage")
+  //     }
+  //   } else {
+  //     // Not saved yet, just remove locally
+  //     const updatedStages = [...paymentStages]
+  //     updatedStages.splice(index, 1)
+  //     setPaymentStages(updatedStages)
+  //   }
+  // }
 
   const fetchInvoices = async (index) => {
     try {
@@ -227,13 +225,13 @@ export default function PaymentDetails() {
           <div className="payment-stages-list">
             {paymentStages.map((stage, index) => (
               <div key={index} className="payment-stage-item">
-                <div className="payment-stage-header">
+                {/* <div className="payment-stage-header">
                   <h3>Stage {index + 1}</h3>
                   <button type="button" className="btn btn-danger btn-sm" onClick={() => removePaymentStage(index)}>
                     <Trash2 size={16} />
                     <span>Remove</span>
                   </button>
-                </div>
+                </div> */}
 
                 <div className="payment-stage-form">
                   <div className="form-grid">

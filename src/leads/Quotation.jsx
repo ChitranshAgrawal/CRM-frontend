@@ -17,11 +17,13 @@ export default function Quotation() {
   const [files, setFiles] = useState([])
   const [clientInfo, setClientInfo] = useState(null)
 
+  const url = import.meta.env.VITE_API_URL || "http://localhost:8000";
+
   // Fetch client information
   useEffect(() => {
     const fetchClientInfo = async () => {
       try {
-        const res = await axios.get(`http://localhost:3000/getLead/${id}`)
+        const res = await axios.get(`${url}/leads/${id}`)
         setClientInfo(res.data)
       } catch (err) {
         console.error("Error fetching client info:", err)
@@ -34,7 +36,7 @@ export default function Quotation() {
   // Fetch files from backend
   const fetchFiles = async () => {
     try {
-      const res = await axios.get(`http://localhost:3000/getFiles/${id}`)
+      const res = await axios.get(`${url}/getFiles/${id}`)
       setFiles(res.data)
     } catch (err) {
       console.error("Error fetching files:", err)
@@ -64,7 +66,7 @@ export default function Quotation() {
     formData.append("file", file)
 
     try {
-      await axios.post(`http://localhost:3000/upload-files/${id}`, formData, {
+      await axios.post(`${url}/upload-files/${id}`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       })
 
@@ -184,10 +186,10 @@ export default function Quotation() {
                   </div>
                   <div className="file-details">
                     <div className="file-name">{file.fileName}</div>
-                    <div className="file-date">Uploaded on {new Date(file.uploadDate).toLocaleDateString()}</div>
+                    <div className="file-date">Uploaded on {new Date(file.uploadedAt).toLocaleDateString()}</div>
                   </div>
                   <a
-                    href={`http://localhost:3000/${file.fileUrl}`}
+                    href={`${url}/files/${file.fileName}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="file-download"

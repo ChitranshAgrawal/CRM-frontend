@@ -27,10 +27,12 @@ export default function DisplayProject() {
   const [projectDetails, setProjectDetails] = useState({})
   const [loading, setLoading] = useState(true)
 
+  const url = import.meta.env.VITE_API_URL || "http://localhost:8000";
+
   useEffect(() => {
     setLoading(true)
     axios
-      .get(`http://localhost:3000/projectID/${id}`)
+      .get(`${url}/project/${id}`)
       .then((response) => {
         setProjectDetails(response.data)
         setLoading(false)
@@ -44,7 +46,7 @@ export default function DisplayProject() {
   const handleDelete = () => {
     if (window.confirm("Are you sure you want to delete this project?")) {
       axios
-        .delete(`http://localhost:3000/deleteProject/${id}`)
+        .delete(`${url}/project/${id}`)
         .then(() => {
           alert("Project deleted successfully")
           navigate("/projects")
@@ -71,7 +73,7 @@ export default function DisplayProject() {
         </button>
         <h1>Project Details</h1>
         <div className="page-actions">
-          <button className="btn btn-outline" onClick={() => navigate(`/updateProject/${id}`)}>
+          <button className="btn btn-outline" onClick={() => navigate(`/project/${id}`)}>
             <Edit size={16} />
             <span>Edit</span>
           </button>

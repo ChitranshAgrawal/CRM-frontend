@@ -35,10 +35,12 @@ export default function UpdateProject() {
   })
   const [paymentStages, setPaymentStages] = useState([])
 
+  const url = import.meta.env.VITE_API_URL || "http://localhost:8000";
+
   useEffect(() => {
     setLoading(true)
     axios
-      .get(`http://localhost:3000/projectID/${id}`)
+      .get(`${url}/project/${id}`)
       .then((res) => {
         // Format dates for input fields
         const data = { ...res.data }
@@ -90,7 +92,7 @@ export default function UpdateProject() {
     setSaving(true)
 
     axios
-      .put(`http://localhost:3000/updateProject/${id}`, {
+      .put(`${url}/project/${id}`, {
         ...formData,
         paymentStages,
       })

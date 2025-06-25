@@ -13,11 +13,13 @@ export default function PaymentDetails() {
   const [loading, setLoading] = useState(true)
   const [projectDetails, setProjectDetails] = useState(null)
 
+  const url = import.meta.env.VITE_API_URL || "http://localhost:8000";
+
   useEffect(() => {
     const fetchProjectData = async () => {
       try {
         setLoading(true)
-        const res = await axios.get(`http://localhost:3000/projectID/${id}`)
+        const res = await axios.get(`${url}/project/${id}`)
         setProjectDetails(res.data)
         setPaymentStages(res.data.paymentStages || [])
         setLoading(false)
@@ -57,7 +59,7 @@ export default function PaymentDetails() {
     // If stage has an _id, it's already saved in DB
     if (stageToRemove._id) {
       try {
-        await axios.delete(`http://localhost:3000/remove-stage/${id}/${stageToRemove._id}`)
+        await axios.delete(`${url}/remove-stage/${id}/${stageToRemove._id}`)
         const updatedStages = [...paymentStages]
         updatedStages.splice(index, 1)
         setPaymentStages(updatedStages)
@@ -76,7 +78,7 @@ export default function PaymentDetails() {
 
   const fetchInvoices = async (index) => {
     try {
-      const res = await axios.get(`http://localhost:3000/getInvoices/${id}`)
+      const res = await axios.get(`${url}/getInvoices/${id}`)
       const updatedStages = [...paymentStages]
       updatedStages[index].invoices = res.data
       setPaymentStages(updatedStages)
@@ -102,7 +104,7 @@ export default function PaymentDetails() {
     if (stage._id) formData.append("stageId", stage._id)
 
     try {
-      await axios.post(`http://localhost:3000/upload-invoices/${id}`, formData, {
+      await axios.post(`${url}/upload-invoices/${id}`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       })
       fetchInvoices(index)
@@ -112,12 +114,12 @@ export default function PaymentDetails() {
       alert("Upload failed. Please try again.")
     }
 
-    window.location.reload()
+    // window.location.reload()
   }
 
   const fetchReceipts = async (index) => {
     try {
-      const res = await axios.get(`http://localhost:3000/getReceipts/${id}`)
+      const res = await axios.get(`${url}/getReceipts/${id}`)
       const updatedStages = [...paymentStages]
       updatedStages[index].receipts = res.data
       setPaymentStages(updatedStages)
@@ -143,7 +145,8 @@ export default function PaymentDetails() {
     if (stage._id) formData.append("stageId", stage._id)
 
     try {
-      await axios.post(`http://localhost:3000/upload-receipts/${id}`, formData, {
+      
+      await axios.post(`${url}/upload-receipts/${id}`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       })
 
@@ -154,7 +157,7 @@ export default function PaymentDetails() {
       alert("Upload failed. Please try again.")
     }
 
-    window.location.reload()
+    // window.location.reload()
   }
 
   if (loading) {
@@ -169,7 +172,7 @@ export default function PaymentDetails() {
   return (
     <div className="payment-details-page">
       <div className="page-header">
-        <button className="back-button" onClick={() => navigate(`/updateProject/${id}`)}>
+        <button className="back-button" onClick={() => navigate(`/project/${id}`)}>
           <ArrowLeft size={18} />
           <span>Back to Project</span>
         </button>
@@ -307,7 +310,7 @@ export default function PaymentDetails() {
                             type="text"
                             id={`fileName-${index}`}
                             className="form-control"
-                            value={stage.fileName || ""}
+                            // value={stage.fileName || ""}
                             onChange={(e) => {
                               const updatedStages = [...paymentStages]
                               updatedStages[index].fileName = e.target.value
@@ -360,7 +363,7 @@ export default function PaymentDetails() {
                               <div className="file-name">{stage.fileName}</div>
                             </div>
                             <a
-                              href={`http://localhost:3000/${stage.fileUrl}`}
+                              href={`${url}/invoices/${stage.fileName}`}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="file-download"
@@ -439,7 +442,7 @@ export default function PaymentDetails() {
                               <div className="file-name">{stage.receiptName}</div>
                             </div>
                             <a
-                              href={`http://localhost:3000/${stage.receiptUrl}`}
+                              href={`${url}/reciepts/${stage.receiptName}`}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="file-download"

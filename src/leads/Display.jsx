@@ -27,10 +27,12 @@ export default function Display() {
   const [leadDetails, setLeadDetails] = useState({})
   const [loading, setLoading] = useState(true)
 
+  const url = import.meta.env.VITE_API_URL || "http://localhost:8000";
+
   useEffect(() => {
     setLoading(true)
     axios
-      .get(`http://localhost:3000/getLead/${id}`)
+      .get(`${url}/leads/${id}`)
       .then((response) => {
         setLeadDetails(response.data)
         setLoading(false)
@@ -44,7 +46,7 @@ export default function Display() {
   const handleDelete = () => {
     if (window.confirm("Are you sure you want to delete this lead?")) {
       axios
-        .delete(`http://localhost:3000/deleteClient/${id}`)
+        .delete(`${url}/leads/${id}`)
         .then(() => {
           alert("Lead deleted successfully")
           navigate("/")

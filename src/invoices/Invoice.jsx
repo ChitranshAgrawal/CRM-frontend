@@ -17,11 +17,13 @@ export default function Invoice() {
   const [invoices, setInvoices] = useState([])
   const [projectDetails, setProjectDetails] = useState(null)
 
+  const url = import.meta.env.VITE_API_URL || "http://localhost:8000";
+
   // Fetch project information
   useEffect(() => {
     const fetchProjectInfo = async () => {
       try {
-        const res = await axios.get(`http://localhost:3000/projectID/${id}`)
+        const res = await axios.get(`${url}/project/${id}`)
         setProjectDetails(res.data)
       } catch (err) {
         console.error("Error fetching project info:", err)
@@ -34,7 +36,7 @@ export default function Invoice() {
   // Fetch invoices from backend
   const fetchInvoices = async () => {
     try {
-      const res = await axios.get(`http://localhost:3000/getInvoices/${id}`)
+      const res = await axios.get(`${url}/getInvoices/${id}`)
       setInvoices(res.data)
     } catch (err) {
       console.error("Error fetching invoices:", err)
@@ -64,7 +66,7 @@ export default function Invoice() {
     formData.append("file", file)
 
     try {
-      await axios.post(`http://localhost:3000/upload-invoice/${id}`, formData, {
+      await axios.post(`${url}/upload-invoice/${id}`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       })
 
@@ -186,10 +188,10 @@ export default function Invoice() {
                   </div>
                   <div className="file-details">
                     <div className="file-name">{invoice.fileName}</div>
-                    <div className="file-date">Uploaded on {new Date(invoice.uploadDate).toLocaleDateString()}</div>
+                    <div className="file-date">Uploaded on {new Date(invoice.uploadedAt).toLocaleDateString()}</div>
                   </div>
                   <a
-                    href={`http://localhost:3000/${invoice.fileUrl}`}
+                    href={`${url}/invoices/${invoice.fileName}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="file-download"

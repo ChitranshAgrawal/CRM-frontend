@@ -30,10 +30,12 @@ export default function UpdateForm() {
     createdAt: "",
   })
 
+  const url = import.meta.env.VITE_API_URL || "http://localhost:8000";
+
   useEffect(() => {
     setLoading(true)
     axios
-      .get(`http://localhost:3000/getLead/${id}`)
+      .get(`${url}/leads/${id}`)
       .then((res) => {
         // Format dates for input fields
         const data = { ...res.data }
@@ -60,7 +62,7 @@ export default function UpdateForm() {
     setSaving(true)
 
     axios
-      .put(`http://localhost:3000/updateLead/${id}`, clientData)
+      .put(`${url}/leads/${id}`, clientData)
       .then(() => {
         setSaving(false)
         if (clientData.status === "Converted") {

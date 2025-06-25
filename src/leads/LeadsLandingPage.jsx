@@ -21,9 +21,12 @@ export default function LeadsLandingPage() {
   const [isUpdating, setIsUpdating] = useState(false)
   const navigate = useNavigate()
 
+  const url = import.meta.env.VITE_API_URL || "http://localhost:8000";
+
+
   useEffect(() => {
     axios
-      .get("http://localhost:3000/clients")
+      .get(`${url}/leads`)
       .then((response) => setClients(response.data))
       .catch((error) => console.error("Error fetching clients:", error))
   }, [])
@@ -144,7 +147,7 @@ export default function LeadsLandingPage() {
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete this lead?")) {
       axios
-        .delete(`http://localhost:3000/deleteClient/${id}`)
+        .delete(`${url}/leads/${id}`)
         .then(() => setClients((prev) => prev.filter((client) => client._id !== id)))
         .catch((err) => console.log(err))
     }
@@ -181,7 +184,7 @@ export default function LeadsLandingPage() {
     setIsUpdating(true)
 
     axios
-      .put(`http://localhost:3000/updateLead/${selectedClient._id}`, {
+      .put(`${url}/leads/${selectedClient._id}`, {
         ...selectedClient,
         status: newStatus,
       })
@@ -228,7 +231,7 @@ export default function LeadsLandingPage() {
     setIsUpdating(true)
 
     axios
-      .put(`http://localhost:3000/updateLead/${selectedClient._id}`, {
+      .put(`${url}/leads/${selectedClient._id}`, {
         ...selectedClient,
         priority: newPriority,
       })

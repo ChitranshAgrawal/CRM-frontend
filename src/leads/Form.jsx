@@ -51,6 +51,8 @@ export default function ClientForm() {
     })
   }
 
+  const url = import.meta.env.VITE_API_URL || "http://localhost:8000";
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
@@ -63,7 +65,7 @@ export default function ClientForm() {
         leadID: leadIDToSend,
       }
 
-      await axios.post("http://localhost:3000/createClient", dataToSend)
+      await axios.post(`${url}/leads`, dataToSend)
 
       setLoading(false)
       alert(`Lead added successfully with ID: ${leadIDToSend}`)

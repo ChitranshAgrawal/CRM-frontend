@@ -19,9 +19,11 @@ export default function ProjectLandingPage() {
   const [isUpdating, setIsUpdating] = useState(false)
   const navigate = useNavigate()
 
+  const url = import.meta.env.VITE_API_URL || "http://localhost:8000";
+
   useEffect(() => {
     axios
-      .get("http://localhost:3000/getProjects")
+      .get(`${url}/project`)
       .then((response) => setProjects(response.data))
       .catch((error) => console.error("Error fetching projects:", error))
   }, [])
@@ -132,7 +134,7 @@ export default function ProjectLandingPage() {
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete this project?")) {
       axios
-        .delete(`http://localhost:3000/deleteProject/${id}`)
+        .delete(`${url}/project/${id}`)
         .then(() => {
           setProjects((prev) => prev.filter((project) => project._id !== id))
         })
@@ -171,7 +173,7 @@ export default function ProjectLandingPage() {
     setIsUpdating(true)
 
     axios
-      .put(`http://localhost:3000/updateProject/${selectedProject._id}`, {
+      .put(`${url}/project/${selectedProject._id}`, {
         ...selectedProject,
         status: newStatus,
       })

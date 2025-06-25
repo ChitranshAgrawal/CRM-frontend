@@ -36,7 +36,7 @@ export default function Invoice() {
   // Fetch invoices from backend
   const fetchInvoices = async () => {
     try {
-      const res = await axios.get(`${url}/getInvoices/${id}`)
+      const res = await axios.get(`${url}/invoice/${id}`)
       setInvoices(res.data)
     } catch (err) {
       console.error("Error fetching invoices:", err)
@@ -66,7 +66,7 @@ export default function Invoice() {
     formData.append("file", file)
 
     try {
-      await axios.post(`${url}/upload-invoice/${id}`, formData, {
+      await axios.post(`${url}/invoice/${id}`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       })
 

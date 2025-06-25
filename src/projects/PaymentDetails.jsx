@@ -78,7 +78,7 @@ export default function PaymentDetails() {
 
   const fetchInvoices = async (index) => {
     try {
-      const res = await axios.get(`${url}/getInvoices/${id}`)
+      const res = await axios.get(`${url}/invoice/${id}`)
       const updatedStages = [...paymentStages]
       updatedStages[index].invoices = res.data
       setPaymentStages(updatedStages)
@@ -104,7 +104,7 @@ export default function PaymentDetails() {
     if (stage._id) formData.append("stageId", stage._id)
 
     try {
-      await axios.post(`${url}/upload-invoices/${id}`, formData, {
+      await axios.post(`${url}/invoice/${id}`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       })
       fetchInvoices(index)

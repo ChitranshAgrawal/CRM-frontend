@@ -10,12 +10,13 @@ export default function AllQuotations() {
   const [loading, setLoading] = useState(true)
   const [searchTerm, setSearchTerm] = useState("")
   const [filteredQuotations, setFilteredQuotations] = useState([])
+  const url = import.meta.env.VITE_API_URL || "http://localhost:3000"
 
   useEffect(() => {
     const fetchQuotations = async () => {
       try {
         setLoading(true)
-        const response = await axios.get("http://localhost:3000/allQuotations")
+        const response = await axios.get(`${url}/quotation`)
         setQuotations(response.data)
         setFilteredQuotations(response.data)
         setLoading(false)

@@ -36,7 +36,7 @@ export default function Quotation() {
   // Fetch files from backend
   const fetchFiles = async () => {
     try {
-      const res = await axios.get(`${url}/getFiles/${id}`)
+      const res = await axios.get(`${url}/quotation/${id}`)
       setFiles(res.data)
     } catch (err) {
       console.error("Error fetching files:", err)
@@ -66,7 +66,7 @@ export default function Quotation() {
     formData.append("file", file)
 
     try {
-      await axios.post(`${url}/upload-files/${id}`, formData, {
+      await axios.post(`${url}/quotation/${id}`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       })
 
